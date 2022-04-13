@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage image;
 	
 	public List<Entity> entities;
-	public Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 	
 	public static World world;
 	
@@ -87,6 +87,7 @@ public class Game extends Canvas implements Runnable{
 		/*render do jogo*/
 		//Graphics2D g2 = (Graphics2D) g;
 		/***/
+		world.render(g);
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.render(g);
