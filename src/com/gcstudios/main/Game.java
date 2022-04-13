@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.gcstudios.entities.Entity;
 import com.gcstudios.entities.Player;
 import com.gcstudios.graficos.Spritesheet;
+import com.gcstudios.world.World;
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
@@ -28,10 +29,13 @@ public class Game extends Canvas implements Runnable{
 	public List<Entity> entities;
 	public Spritesheet spritesheet;
 	
+	public static World world;
+	
 	public Game() {
 		setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 		initFrame();
 		//inicializando objetos
+		world = new World("/map.png");
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
