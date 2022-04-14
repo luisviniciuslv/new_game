@@ -33,19 +33,27 @@ public class World {
 					
 					tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_SKY);
 
-					if (pixelAtual == 0xFF000000) {
-						// Floor
+					if (pixelAtual == 0xFF4CFF00) {
+						// GRAMA
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_GRAM);
-					} else if (pixelAtual == 0xFF404040) {
-						// Wall
+						
+						
+					} else if (pixelAtual == 0xFF7C423F) {
+						// TERRA
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_EARTH);
+						
+						
 					}else if(pixelAtual == 0xFF1500FF) {
+						//CÉU
 						tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_SKY);
 					}
 					else if (pixelAtual == 0xFFFFFFFF) {
 						// Player
 						Game.player.setX(xx * 16);
 						Game.player.setY(yy * 16);
+					}else if (pixelAtual == 0xFF000000) {
+						// BEDROCK
+						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_BEDROCK);
 					}
 
 					// Objs Game

@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import com.arcastudio.main.Game;
 
 public class Tile {
+	public static BufferedImage TILE_BEDROCK = Game.spritesheet.getSprite(16, 16, 16, 16);
 	public static BufferedImage TILE_GRAM = Game.spritesheet.getSprite(0, 0, 16, 16);
 	public static BufferedImage TILE_EARTH = Game.spritesheet.getSprite(16, 0, 16, 16);
 	public static BufferedImage TILE_SKY = Game.spritesheet.getSprite(0, 16, 16, 16);
