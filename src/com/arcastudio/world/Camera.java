@@ -14,7 +14,6 @@ public class Camera {
 			Atual = Max;
 		}
 		
-		System.out.println(x);
 		return Atual;
 	}
 	

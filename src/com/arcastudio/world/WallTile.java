@@ -2,9 +2,9 @@ package com.arcastudio.world;
 
 import java.awt.image.BufferedImage;
 
-public class SkyTile extends Tile{
+public class WallTile extends Tile{
 
-	public SkyTile(int x, int y, BufferedImage sprite) {
+	public WallTile(int x, int y, BufferedImage sprite) {
 		super(x, y, sprite);
 	}
 	

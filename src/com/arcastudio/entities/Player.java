@@ -14,12 +14,6 @@ public class Player extends Entity {
 	public int dir = right_dir;
 	public int speed = 2;
 	
-	public boolean jump = false;
-	public int jumpFrames = 0;
-	public int jumpHeight = 20;
-	public boolean isJumping = false;
-	public boolean inFloor = false;
-	
 	private int frames = 0, maxFrames = 5, index =	0, maxIndex = 3;
 	private boolean moved = false;
 	private BufferedImage[] rightPlayer;
@@ -28,7 +22,7 @@ public class Player extends Entity {
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
-		//Animaï¿½ï¿½es quantidade
+		//Animações quantidade
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
 		for(int i = 0; i< 4; i++) {
@@ -42,57 +36,26 @@ public class Player extends Entity {
 	}
 
 	public void tick() {
-		
 		moved = false;
+		
 		if(right && World.isFree((int)(x+speed), this.getY())) {
 			moved = true;
 			dir = right_dir;
 			x+=speed;
-			System.out.println(x);
 		}
-		
 		else if(left && World.isFree((int)(x-speed), this.getY())) {
 			moved = true;
 			dir = left_dir;
 			x-=speed;
 		}
 		
-		/* sistema de gravidade
-		   ||||||
-		   VVVVVV
-		 */
-		if(World.isFree(this.getX(), (int)(y+1)) && isJumping == false) {
+		if(up && World.isFree(this.getX(), (int)(y-speed))) {
+			moved = true;
+			y-=speed;
+		}
+		else if(down && World.isFree(this.getX(), (int)(y+speed))) {
+			moved = true;
 			y+=speed;
-			inFloor = true;
-		}
-		
-		
-		if(jump) {
-			if(!World.isFree(x, y+1)) {
-				isJumping = true;
-		}else {
-			jump = false;}
-		}
-		if(isJumping) {
-			if(World.isFree(x, y-1)) {
-				y-=8;
-				jumpFrames+=2;
-				if(jumpFrames == jumpHeight) {
-					isJumping = false;
-					jump = false;
-					jumpFrames = 0;
-					}
-				}
-			else {
-				isJumping = false;
-				jump = false;
-				jumpFrames = 0;
-			}
-		}
-		
-		
-		if(down) {
-			//desviar
 		}
 		
 		if(moved) {
@@ -105,6 +68,8 @@ public class Player extends Entity {
 				}
 			}
 		}
+		
+		//Config Camera
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
 	}
