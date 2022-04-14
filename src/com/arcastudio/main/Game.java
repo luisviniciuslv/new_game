@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-//Importação dos Packages
+//Importaï¿½ï¿½o dos Packages
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
 import com.arcastudio.graficos.Spritesheet;
@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Thread thread;
 	public static final int WIDTH = 240, HEIGHT = 160, SCALE = 3;
 	
-	//Imagens e Gráficos
+	//Imagens e Grï¿½ficos
 	private BufferedImage image;
 	private Graphics g;
 	
@@ -60,15 +60,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		world = new World("/level1.png");
 	}
 
-	// Criação da Janela
+	// Criaï¿½ï¿½o da Janela
 	public void initFrame() {
 		frame = new JFrame("New Window");
 		frame.add(this);
-		frame.setResizable(false);// Usuário não irá ajustar janela
+		frame.setResizable(false);// Usuï¿½rio nï¿½o irï¿½ ajustar janela
 		frame.pack();
 		frame.setLocationRelativeTo(null);// Janela inicializa no centro
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Fechar o programa por completo
-		frame.setVisible(true);// Dizer que estará visível
+		frame.setVisible(true);// Dizer que estarï¿½ visï¿½vel
 	}
 
 	// Threads
@@ -102,10 +102,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	// O que será mostrado em tela
+	// O que serï¿½ mostrado em tela
 	public void render() {
-		BufferStrategy bs = this.getBufferStrategy();// Sequência de buffer para otimizar a renderização, lidando com
-														// performace gráfica
+		BufferStrategy bs = this.getBufferStrategy();// Sequï¿½ncia de buffer para otimizar a renderizaï¿½ï¿½o, lidando com
+														// performace grï¿½fica
 		if (bs == null) {
 			this.createBufferStrategy(3);
 			return;
@@ -128,7 +128,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		/***/
 
-		g.dispose();// Limpar dados de imagem não usados
+		g.dispose();// Limpar dados de imagem nï¿½o usados
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		bs.show();
@@ -195,7 +195,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 
 			System.out.println("Cima");
-			player.up = true;
+			player.jump = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			System.out.println("Baixo");

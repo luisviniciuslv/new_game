@@ -14,6 +14,11 @@ public class Player extends Entity {
 	public int dir = right_dir;
 	public int speed = 2;
 	
+	public boolean jump;
+	public int jumpHeight = 20;
+	public int jumpFrames = 0;
+	public boolean isJumping = false;
+	
 	private int frames = 0, maxFrames = 5, index =	0, maxIndex = 3;
 	private boolean moved = false;
 	private BufferedImage[] rightPlayer;
@@ -22,7 +27,7 @@ public class Player extends Entity {
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
-		//Animações quantidade
+		//Animaï¿½ï¿½es quantidade
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
 		for(int i = 0; i< 4; i++) {
@@ -37,6 +42,34 @@ public class Player extends Entity {
 
 	public void tick() {
 		moved = false;
+		
+		if(World.isFree(this.getX(), (int)(y+2)) || isJumping) {
+			y+=4;
+		}
+		
+		
+		if(jump) {
+			if(!World.isFree(x, y+1)) {
+				isJumping = true;
+		}else {
+			jump = false;}
+		}
+		if(isJumping) {
+			if(World.isFree(x, y-1)) {
+				y-=8;
+				jumpFrames+=2;
+				if(jumpFrames == jumpHeight) {
+					isJumping = false;
+					jump = false;
+					jumpFrames = 0;}
+				}
+			else {
+				isJumping = false;
+				jump = false;
+				jumpFrames = 0;
+			}
+		}
+		
 		
 		if(right && World.isFree((int)(x+speed), this.getY())) {
 			moved = true;
