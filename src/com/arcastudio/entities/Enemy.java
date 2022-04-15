@@ -34,6 +34,8 @@ public class Enemy extends Entity{
 	private BufferedImage[] leftSlime;
 	private BufferedImage[] rightSlime;
 	
+	private BufferedImage rightAtackSlime;
+	private BufferedImage leftAtackSlime;
 	
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, null);
@@ -49,6 +51,10 @@ public class Enemy extends Entity{
 		leftSlime[1]= Game.spriteEnemy.getSprite(32, 0, 16, 16);
 		leftSlime[2]= Game.spriteEnemy.getSprite(16, 0, 16, 16);
 		leftSlime[3]= Game.spriteEnemy.getSprite(0, 0, 16, 16);
+		
+
+		rightAtackSlime = Game.spriteEnemy.getSprite(96, 16, 16, 16);
+		leftAtackSlime = Game.spriteEnemy.getSprite(16, 16, 16, 16);
 	}
 	public void tick() {
 		
@@ -71,17 +77,17 @@ public class Enemy extends Entity{
 			if(World.isFree(this.getX(),(int)(y+1))) {
 				y+=1;
 			}
-			
-			if(moved == "right") {
-				frames++;
-				if(frames == maxFrames) {
-					frames = 0;
-					index++;
-					if(index == rightSlime.length) {
-						index = 0;
-					}
+		
+		if(moved == "right") {
+			frames++;
+			if(frames == maxFrames) {
+				frames = 0;
+				index++;
+				if(index == rightSlime.length) {
+					index = 0;
 				}
 			}
+		}
 		if(moved == "left") {
 			frames++;
 			if(frames == maxFrames) {
@@ -121,8 +127,6 @@ public class Enemy extends Entity{
 				}
 				
 			}
-
-			
 			
 			if(isCollidingWithPlayer() == false) {
 			if(x < Game.player.getX() && World.isFree((int)(x+spd), y) && !isColliding((int)(x+spd), this.getY())) {
@@ -134,18 +138,26 @@ public class Enemy extends Entity{
 				moved = "left";
 			}
 			}}
-		
 		//COLIDINDO
 		if(isCollidingWithPlayer()) {
 			//A CADA 100 MS ELE DA DANO
 				timeing++; 
+				
 				if(timeing == 100) {
-					Game.player.life = Game.player.life - 30;
+					if(moved == "right") {
+						moved = "rightAtack";
+					}if(moved == "left") {
+						moved = "leftAtack";
+					}
+					
+					Player.life = Player.life - 30;
 					System.out.println("life: " + Game.player.life);	
 					timeing = 0;
+					}
 				}
-			}
-		}
+								
+				
+				}
 		
 	
 	public boolean isCollidingWithPlayer(){
@@ -179,11 +191,16 @@ public class Enemy extends Entity{
 		}
 		else if(moved == "right") {
 			g.drawImage(rightSlime[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}else if(moved == "left") {
+		}
+		else if(moved == "left") {
 			g.drawImage(leftSlime[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		super.render(g);
-		g.setColor(Color.blue);
-		g.fillRect(this.getX(), this.getY(), 16,16);
+		else if(moved == "rightAtack") {
+			g.drawImage(rightAtackSlime, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		else if(moved == "leftAtack") {
+			g.drawImage(leftAtackSlime, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+
 	}
 }
