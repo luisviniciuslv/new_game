@@ -3,18 +3,14 @@ package com.arcastudio.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import com.arcastudio.entities.*;
 import com.arcastudio.main.Game;
-
 public class World {
-
+	
 	public static Tile[] tiles;
 	public static int WIDTH, HEIGHT;
 	public static final int TILE_SIZE = 16;
-
 	public World(String path) {
 		try {
 			BufferedImage map = ImageIO.read(getClass().getResource(path));
@@ -31,12 +27,11 @@ public class World {
 
 					int pixelAtual = pixels[xx + (yy * map.getWidth())];
 					
-					tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_SKY);
+					tiles[xx + (yy * WIDTH)] = new no_collision(xx * 16, yy * 16, Tile.TILE_SKY);
 
 					if (pixelAtual == 0xFF4CFF00) {
 						// GRAMA
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_GRAM);
-						
 						
 					} else if (pixelAtual == 0xFF7C423F) {
 						// TERRA
@@ -45,7 +40,7 @@ public class World {
 						
 					}else if(pixelAtual == 0xFF1500FF) {
 						//CÉU
-						tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_SKY);
+						tiles[xx + (yy * WIDTH)] = new no_collision(xx * 16, yy * 16, Tile.TILE_SKY);
 					}
 					else if (pixelAtual == 0xFFFFFFFF) {
 						// Player
@@ -112,6 +107,7 @@ public class World {
 
 				if (xx < 0 || yy < 0 || xx >= WIDTH || yy >= HEIGHT) {
 					continue;
+				
 				}
 
 				Tile tile = tiles[xx + (yy * WIDTH)];

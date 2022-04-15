@@ -55,7 +55,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		
-		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+		player = new Player(0, 0, 0,0 , null);
 		entities.add(player);
 		world = new World("/level2.png");
 	}
@@ -210,27 +210,25 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
-			System.out.println("Direita Solto");
+			player.moved = "stop_right";
 			player.right = false;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
-			System.out.println("Esquerda Solto");
+			player.moved = "stop_left";
 			player.left = false;
 
 		}
 
-		// Cima e Baixo
+		/*
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-
-			System.out.println("Cima Solto");
 			player.up = false;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			System.out.println("Baixo Solto");
 			player.down = false	;
 
-		}
+		}*/
 
 	}
 

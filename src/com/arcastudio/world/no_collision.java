@@ -2,9 +2,9 @@ package com.arcastudio.world;
 
 import java.awt.image.BufferedImage;
 
-public class FloorTile extends Tile{
+public class no_collision extends Tile{
 
-	public FloorTile(int x, int y, BufferedImage sprite) {
+	public no_collision(int x, int y, BufferedImage sprite) {
 		super(x, y, sprite);
 	}
 	
