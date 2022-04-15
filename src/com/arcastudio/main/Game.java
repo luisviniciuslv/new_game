@@ -16,8 +16,10 @@ import com.arcastudio.entities.Enemy;
 //Importa��o dos Packages
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
+import com.arcastudio.graficos.SpriteEnemy;
 import com.arcastudio.graficos.SpritePlayer;
 import com.arcastudio.graficos.Spritesheet;
+import com.arcastudio.graficos.UI;
 import com.arcastudio.world.World;
 
 import javax.swing.JFrame;
@@ -37,18 +39,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Graphics g;
 	
 	//Entities
+	public static SpriteEnemy spriteEnemy;
 	public static SpritePlayer spriteplayer;
 	public static Spritesheet spritesheet;
-	public static World world;
 	
+	public static World world;
 	
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
 	
 	public static Player player;
+	
 	public static Random rand;
-	// private Graphics2D g2;
-	/***/
+	
+	public UI ui;
 
 	// Construtor
 	public Game() {
@@ -59,10 +63,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
 		// Inicializando Objetos
-		
+		ui = new UI();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
+		spriteEnemy = new SpriteEnemy("/spriteenemies.png");
 		spritesheet = new Spritesheet("/spritesheet.png");
 		spriteplayer = new SpritePlayer("/spriteplayer.png");
 		player = new Player(0, 0, 0,0 , null);
@@ -134,8 +139,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.render(g);
 		}
 
+		ui.render(g);
 		/***/
-
 		g.dispose();// Limpar dados de imagem n�o usados
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);

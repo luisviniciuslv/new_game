@@ -24,7 +24,6 @@ public class Player extends Entity {
 	
 	private int frames = 0, maxFrames = 10, index =	0;
 	public static String moved = "stop";
-	private BufferedImage[] forntPlayerAnimate;
 
 	private BufferedImage frontPlayer;
 	
@@ -34,24 +33,35 @@ public class Player extends Entity {
 	public static BufferedImage[] player_right;
 	public static BufferedImage[] player_left;
 	
+	
+	public static double life = 100, maxlife = 100;
+	
+	
+	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
 		
 		
 		
-		player_right = new BufferedImage[2];
-		player_right[0] = Game.spriteplayer.getSprite(16, 32, 16, 16);
-		player_right[1] = Game.spriteplayer.getSprite(32, 32, 16, 16);
+		player_right = new BufferedImage[6];
+		player_right[0] = Game.spriteplayer.getSprite(2, 0, 11, 16);
+		player_right[1] = Game.spriteplayer.getSprite(19, 0, 10, 16);
+		player_right[2] = Game.spriteplayer.getSprite(34, 0, 10, 16);
+		player_right[3] = Game.spriteplayer.getSprite(51, 0, 10, 16);
+		player_right[4] = Game.spriteplayer.getSprite(67, 0, 10, 16);
+		player_right[5] = Game.spriteplayer.getSprite(83, 0, 10, 16);
 		
-		player_left = new BufferedImage[2];
-		player_left[0] = Game.spriteplayer.getSprite(16, 16, 16, 16);
-		player_left[1] = Game.spriteplayer.getSprite(32, 16, 16, 16);
-			
+		player_left = new BufferedImage[6];
+		player_left[0] = Game.spriteplayer.getSprite(3, 16, 11, 16);
+		player_left[1] = Game.spriteplayer.getSprite(20, 16, 10, 16);
+		player_left[2] = Game.spriteplayer.getSprite(36, 16, 10, 16);
+		player_left[3] = Game.spriteplayer.getSprite(52, 16, 10, 16);
+		player_left[4] = Game.spriteplayer.getSprite(68, 16, 10, 16);
+		player_left[5] = Game.spriteplayer.getSprite(85, 16, 10, 16);
 		
-		frontPlayer = Game.spriteplayer.getSprite(0, 0, 16, 16);
-		player_stop_right = Game.spriteplayer.getSprite(0, 32, 16, 16);
-		player_stop_left = Game.spriteplayer.getSprite(0, 16, 16, 16);
+		player_stop_right = Game.spriteplayer.getSprite(2, 0, 11, 16);
+		player_stop_left = Game.spriteplayer.getSprite(3, 16, 11, 16);
 	}
 
 	public void tick() {
@@ -96,7 +106,6 @@ public class Player extends Entity {
 		else if(left && World.isFree((int)(x-speed), this.getY())) {
 			moved = "left";
 			x-=speed;
-			
 		}
 		
 		if(moved == "left") {
@@ -128,7 +137,7 @@ public class Player extends Entity {
 	public void render(Graphics g) {
 		//Ativar o player no JFrame, flip
 		if(moved == "stop") {
-			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(player_stop_right, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "right") {
 			g.drawImage(player_right[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
