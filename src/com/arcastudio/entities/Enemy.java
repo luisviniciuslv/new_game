@@ -1,5 +1,6 @@
 package com.arcastudio.entities;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public class Enemy extends Entity{
 	public int jumpHeight = 20;
 	public int jumpFrames = 0;
 	public boolean isJumping = false;
+	
+	
 	
 	int spd = random.nextInt(3);
 	
@@ -40,7 +43,7 @@ public class Enemy extends Entity{
 		
 		if(x - Game.player.getX()  < 100) {
 				
-			if(World.isFree(this.getX(), (int)(y+1))) {
+			if(World.isFree(this.getX(),(int)(y+1))) {
 				y+=1;
 			}
 			
@@ -74,19 +77,42 @@ public class Enemy extends Entity{
 				
 			}
 			
+			if(this.isCollidingWithPlayer() == false) {
 			
-			
-			
-			if(x < Game.player.getX() && World.isFree((int)(x+spd), y)) {
-				System.out.println(x);
+			if(x < Game.player.getX()  + 16 && World.isFree((int)(x+spd), y) && !isColliding((int)(x+16), this.getY())) {
 				x+=spd;
 			}
-			else if( x > Game.player.getX()&& World.isFree((int)(x-spd), y)){
+			else if( x > Game.player.getX() -16 && World.isFree((int)(x-spd), y) && !isColliding((int)(x-16), this.getY())){
 				x-=spd;
-				System.out.println(x);
+				if(x == Game.player.getX() - 16) {
+					
+				}
 			}
-			 
 			}
-			 
+		}
+		}
+	
+	public boolean isCollidingWithPlayer(){
+		
+		Rectangle enemyCurrent  = new Rectangle(this.getX(), this.getY(),World.TILE_SIZE,World.TILE_SIZE);	
+		Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(),16,16);
+		
+		return enemyCurrent.intersects(player );
 	}
+	
+	public boolean isColliding(int xnext, int ynext) {
+		Rectangle enemyCurrent  = new Rectangle(xnext, ynext,World.TILE_SIZE,World.TILE_SIZE);	
+		for(int i = 0; i < Game.enemies.size(); i++) {
+			Enemy e = Game.enemies.get(i);
+			if(e == this)
+				continue;
+			Rectangle targetEnemy = new Rectangle(e.getX(), e.getY(),World.TILE_SIZE,World.TILE_SIZE);
+			if(enemyCurrent.intersects(targetEnemy)) {
+				return true;
+			}
+		
+		}
+		
+		return false;
+	}	
 }

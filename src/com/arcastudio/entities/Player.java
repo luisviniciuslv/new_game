@@ -60,9 +60,7 @@ public class Player extends Entity {
 		if(World.isFree((int)x, (int)(y+1)) && isJumping == false) {
 			y+=gravity;
 		}
-					/*PARA UM PERSONAGEM 16X32 
-								|
-		             			V*/
+		
 		
 		if(jump) { 
 			if(!World.isFree(this.getX(),this.getY()+1)){

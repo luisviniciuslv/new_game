@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.arcastudio.entities.Enemy;
 //Importa��o dos Packages
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
@@ -39,7 +40,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static SpritePlayer spriteplayer;
 	public static Spritesheet spritesheet;
 	public static World world;
+	
+	
 	public static List<Entity> entities;
+	public static List<Enemy> enemies;
+	
 	public static Player player;
 	public static Random rand;
 	// private Graphics2D g2;
@@ -57,9 +62,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Enemy>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		spriteplayer = new SpritePlayer("/spriteplayer.png");
-		player = new Player(999, 999, 999,999 , null);
+		player = new Player(0, 0, 0,0 , null);
 		world = new World("/level2.png");
 		entities.add(player);
 		
