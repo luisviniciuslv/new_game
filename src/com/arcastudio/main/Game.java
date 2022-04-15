@@ -10,10 +10,12 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //Importa��o dos Packages
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
+import com.arcastudio.graficos.SpritePlayer;
 import com.arcastudio.graficos.Spritesheet;
 import com.arcastudio.world.World;
 
@@ -34,16 +36,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Graphics g;
 	
 	//Entities
-	public static List<Entity> entities;
+	public static SpritePlayer spriteplayer;
 	public static Spritesheet spritesheet;
 	public static World world;
+	public static List<Entity> entities;
 	public static Player player;
-
+	public static Random rand;
 	// private Graphics2D g2;
 	/***/
 
 	// Construtor
 	public Game() {
+		rand = new Random();
 		// Para que os eventos de teclado funcionem
 		addKeyListener(this);
 
@@ -54,10 +58,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
-		
-		player = new Player(0, 0, 0,0 , null);
-		entities.add(player);
+		spriteplayer = new SpritePlayer("/spriteplayer.png");
+		player = new Player(999, 999, 999,999 , null);
 		world = new World("/level2.png");
+		entities.add(player);
+		
 	}
 
 	// Cria��o da Janela
@@ -95,9 +100,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void tick() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			if (e instanceof Player) {
-				// Ticks do Player
-			}
 			e.tick();
 		}
 	}
@@ -181,25 +183,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
-			System.out.println("Direita");
 			player.right = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
-			System.out.println("Esquerda");
 			player.left = true;
 
 		}
 
 		// Cima e Baixo
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-
-			System.out.println("Cima");
+			
 			player.jump = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			System.out.println("Baixo");
-			player.down = true;
+			
+			//player.down = true;
 
 		}
 

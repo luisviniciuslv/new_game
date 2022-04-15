@@ -9,54 +9,63 @@ import com.arcastudio.world.World;
 
 public class Player extends Entity {
 	
-	public boolean right, up, left, down;
-	public int right_dir = 0, left_dir = 1;
-	public int dir = right_dir;
-	public double speed = 1;
+	public boolean right, left;
 	
-	public boolean jump;
-	public int jumpHeight = 20;
+	public int dir = 1;
+	private double gravity = 1;
+	
+	public double speed = 2;
+	public boolean jump = false;
+	public int jumpHeight = 32;
 	public int jumpFrames = 0;
 	public boolean isJumping = false;
 	
+	public boolean inFloor = false;
+	
 	private int frames = 0, maxFrames = 10, index =	0;
 	public static String moved = "stop";
-	private BufferedImage[] rightPlayer;
-	private BufferedImage rightStopPlayer;
-	private BufferedImage[] leftPlayer;
-	private BufferedImage leftStopPlayer;
+	private BufferedImage[] forntPlayerAnimate;
+
 	private BufferedImage frontPlayer;
+	
+	public static BufferedImage player_front;
+	public static BufferedImage player_stop_left;
+	public static BufferedImage player_stop_right;
+	public static BufferedImage[] player_right;
+	public static BufferedImage[] player_left;
 	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
 		
-			rightPlayer = new BufferedImage[2];
-			leftPlayer = new BufferedImage[2];
 		
-			rightPlayer[0] = Game.spritesheet.getSprite(65,36, 12, 28);
-			rightPlayer[1] = Game.spritesheet.getSprite(82,36, 12, 28);
-			rightStopPlayer = Game.spritesheet.getSprite(50,36, 12, 28);
-			
-			leftPlayer[0] = Game.spritesheet.getSprite(3, 36, 12, 28);
-			leftPlayer[1] = Game.spritesheet.getSprite(3, 68, 12, 28);
-			rightStopPlayer = Game.spritesheet.getSprite(19,36, 12, 28);
-			
-			frontPlayer = Game.spritesheet.getSprite(34, 36, 12, 28);
 		
+		player_right = new BufferedImage[2];
+		player_right[0] = Game.spriteplayer.getSprite(16, 32, 16, 16);
+		player_right[1] = Game.spriteplayer.getSprite(32, 32, 16, 16);
+		
+		player_left = new BufferedImage[2];
+		player_left[0] = Game.spriteplayer.getSprite(16, 16, 16, 16);
+		player_left[1] = Game.spriteplayer.getSprite(32, 16, 16, 16);
+			
+		
+		frontPlayer = Game.spriteplayer.getSprite(0, 0, 16, 16);
+		player_stop_right = Game.spriteplayer.getSprite(0, 32, 16, 16);
+		player_stop_left = Game.spriteplayer.getSprite(0, 16, 16, 16);
 	}
 
 	public void tick() {
 		moved = "stop";
 		
-		
-		if(World.isFree(this.getX(), (int)(y+15)) || isJumping) {
-			y+=4;
+		if(World.isFree((int)x, (int)(y+1)) && isJumping == false) {
+			y+=gravity;
 		}
-					/*PARA UM PERSONAGEM 16X32 */
-								/*|*/
-		if(jump) {              /*V*/
-			if(!World.isFree(x, y+15)) {
+					/*PARA UM PERSONAGEM 16X32 
+								|
+		             			V*/
+		
+		if(jump) { 
+			if(!World.isFree(this.getX(),this.getY()+1)){
 				isJumping = true;
 		}
 			else {
@@ -64,15 +73,15 @@ public class Player extends Entity {
 		}
 		
 		if(isJumping) {
-			if(World.isFree(x, y-1)) {
-				y-=8;
+			if(World.isFree(this.getX(), this.getY()-1)) {
+				y-=2;	 
 				jumpFrames+=2;
 				if(jumpFrames == jumpHeight) {
 					isJumping = false;
 					jump = false;
 					jumpFrames = 0;}
 				}
-			
+				
 			else {
 				isJumping = false;
 				jump = false;
@@ -97,7 +106,7 @@ public class Player extends Entity {
 			if(frames == maxFrames) {
 				frames = 0;
 				index++;
-				if(index == leftPlayer.length) {
+				if(index == player_left.length) {
 					index = 0;
 				}
 			}
@@ -107,7 +116,7 @@ public class Player extends Entity {
 			if(frames == maxFrames) {
 				frames = 0;
 				index++;
-				if(index == rightPlayer.length) {
+				if(index == player_right.length) {
 					index = 0;
 				}
 			}
@@ -124,17 +133,17 @@ public class Player extends Entity {
 			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "right") {
-			g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(player_right[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "stop_right") {
-			g.drawImage(rightStopPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(player_stop_right, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		
 		else if(moved == "left") {
-			g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(player_left[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "stop_left") {
-			g.drawImage(leftStopPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(player_stop_left, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else {
 			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);

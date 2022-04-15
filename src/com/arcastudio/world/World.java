@@ -74,7 +74,7 @@ public class World {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static boolean isFree(int xnext, int ynext) {
 		int x1 = xnext / TILE_SIZE;
 		int y1 = ynext / TILE_SIZE;
