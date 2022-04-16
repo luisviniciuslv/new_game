@@ -15,10 +15,7 @@ import java.util.Random;
 //Importa��o dos Packages
 import com.arcastudio.entities.Enemy;
 import com.arcastudio.entities.Entity;
-import com.arcastudio.entities.Lifepack;
 import com.arcastudio.entities.Player;
-import com.arcastudio.graficos.SpriteEnemy;
-import com.arcastudio.graficos.SpritePlayer;
 import com.arcastudio.graficos.Spritesheet;
 import com.arcastudio.graficos.UI;
 import com.arcastudio.world.World;
@@ -34,26 +31,24 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private boolean isRunning = true;
 	private Thread thread;
 	public static final int WIDTH = 240, HEIGHT = 160, SCALE = 3;
-	public static int timeing = 0;
-	// imagens e grafico
+	
+	//Imagens e Gr�ficos
 	private BufferedImage image;
 	private Graphics g;
-	
-	//entities
+	//Entities
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
-		
-	public static SpriteEnemy spriteEnemy;
-	public static SpritePlayer spriteplayer;
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Player player;
-	public static Random rand;
+	public static Random random;
 	public UI ui;
+	/***/
 
 	// Construtor
 	public Game() {
-		rand = new Random();
+		random = new Random();
+		
 		// Para que os eventos de teclado funcionem
 		addKeyListener(this);
 
@@ -64,14 +59,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
-		
-		spriteEnemy = new SpriteEnemy("/spriteenemies.png");
 		spritesheet = new Spritesheet("/spritesheet.png");
-		spriteplayer = new SpritePlayer("/spriteplayer.png");
-		player = new Player(0, 0, 0,0 , null);
-		world = new World("/level2.png");
-		entities.add(player);
 		
+		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+		entities.add(player);
+		world = new World("/level2.png");
 	}
 
 	// Cria��o da Janela
@@ -91,7 +83,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		isRunning = true;
 		thread.start();
 	}
-
+	
 	public synchronized void stop() {
 		isRunning = false;
 		try {
@@ -100,17 +92,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//M�todo Principal
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.start();
 	}
-
+	
+	//Ticks do Jogo
 	public void tick() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			if(e instanceof Player) {
-				//ticks player
+			if (e instanceof Player) {
+				// Ticks do Player
 			}
 			e.tick();
 		}
@@ -130,18 +124,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
 		/* Render do jogo */
-		// g2 = (Graphics2D) g; //Transformei em um tipo g e foi feito um cast com o
-		// Graphics2D
-		
 		world.render(g);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-	
+
 			e.render(g);
 		}
-
 		ui.render(g);
 		/***/
+
 		g.dispose();// Limpar dados de imagem n�o usados
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
@@ -157,12 +148,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		double delta = 0;
 		int frames = 0;
 		double timer = System.currentTimeMillis();
-		
-		
 		requestFocus();
 		// Ruuner Game
 		while (isRunning == true) {
-			// System.out.println("My game is Running");
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -185,56 +173,62 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				// para garantir performance.
 
 	}
-		
+
+	@Override
 	public void keyTyped(KeyEvent e) {
-		
+		// TODO Auto-generated method stub
 
 	}
 
-	public void keyPressed(KeyEvent e) {	
+	@Override
+	public void keyPressed(KeyEvent e) {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
+			System.out.println("Direita");
 			player.right = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
+			System.out.println("Esquerda");
 			player.left = true;
 
 		}
 
 		// Cima e Baixo
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-			
 			player.jump = true;
 
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			System.out.println("Baixo");
+			player.down = true;
+
 		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-				Player.dodge = true;				
-	}}
+
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
-			Player.moved = "stop_right";
+			System.out.println("Direita Solto");
 			player.right = false;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
-			Player.moved = "stop_left";
+			System.out.println("Esquerda Solto");
 			player.left = false;
 
 		}
 
-		/*
+		// Cima e Baixo
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-			player.up = false;
 
-		} */if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 
-			Player.moved = "stop";
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			System.out.println("Baixo Solto");
+			player.down = false	;
 
 		}
 

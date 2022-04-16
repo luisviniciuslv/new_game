@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 
 import com.arcastudio.main.Game;
 import com.arcastudio.world.Camera;
-import com.arcastudio.world.World;
-import com.arcastudio.entities.Lifepack;
 
 public class Entity {
 	
@@ -38,7 +36,6 @@ public class Entity {
 		this.mwidth = width;
 		this.mheight = height;
 	}
-	
 	
 	public void setMask(int maskx, int masky, int mwidth, int mheight) {
 		this.maskx = maskx;
@@ -72,8 +69,9 @@ public class Entity {
 	
 	
 	public void tick() {
-
+		
 	}
+	
 	public static boolean isCollidding(Entity e1, Entity e2) {
 		Rectangle e1Mask = new Rectangle(e1.getX() + e1.maskx, e1.getY()+e1.masky, e1.mwidth, e1.mheight);
 		Rectangle e2Mask = new Rectangle(e2.getX() + e2.maskx, e2.getY()+e2.masky, e2.mwidth, e2.mheight);
@@ -81,10 +79,9 @@ public class Entity {
 		return e1Mask.intersects(e2Mask);
 	}
 	
-	
 	public void render(Graphics g) {
 		g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		//g.setColor(Color.red);
-		//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, mwidth, height);
+		//g.fillRect(this.getX() + maskx - Camera.x, this.getY()+ masky - Camera.y, mwidth, height);
 	}
 }
