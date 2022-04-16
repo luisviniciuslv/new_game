@@ -66,7 +66,6 @@ public class World {
 					else if (pixelAtual == 0xFFFF7F7F) {
 						// Life Pack
 						Lifepack lifePack = new Lifepack(xx*16, yy*16, 16, 16, Entity.LIFEPACK_EN);
-						
 						Game.entities.add(lifePack);
 						}
  

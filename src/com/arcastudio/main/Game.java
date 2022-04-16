@@ -15,6 +15,7 @@ import java.util.Random;
 //Importa��o dos Packages
 import com.arcastudio.entities.Enemy;
 import com.arcastudio.entities.Entity;
+import com.arcastudio.entities.Lifepack;
 import com.arcastudio.entities.Player;
 import com.arcastudio.graficos.SpriteEnemy;
 import com.arcastudio.graficos.SpritePlayer;
@@ -33,7 +34,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private boolean isRunning = true;
 	private Thread thread;
 	public static final int WIDTH = 240, HEIGHT = 160, SCALE = 3;
-	
+	public static int timeing = 0;
 	// imagens e grafico
 	private BufferedImage image;
 	private Graphics g;
@@ -41,7 +42,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	//entities
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
-	
+		
 	public static SpriteEnemy spriteEnemy;
 	public static SpritePlayer spriteplayer;
 	public static Spritesheet spritesheet;
@@ -63,6 +64,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
+		
 		spriteEnemy = new SpriteEnemy("/spriteenemies.png");
 		spritesheet = new Spritesheet("/spritesheet.png");
 		spriteplayer = new SpritePlayer("/spriteplayer.png");
@@ -155,6 +157,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		double delta = 0;
 		int frames = 0;
 		double timer = System.currentTimeMillis();
+		
+		
 		requestFocus();
 		// Ruuner Game
 		while (isRunning == true) {
@@ -181,15 +185,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				// para garantir performance.
 
 	}
-
-	@Override
+		
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {	
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
@@ -206,23 +208,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			
 			player.jump = true;
 
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			player.dodge = true;
 		}
-
-	}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+				Player.dodge = true;				
+	}}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 
-			player.moved = "stop_right";
+			Player.moved = "stop_right";
 			player.right = false;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
-			player.moved = "stop_left";
+			Player.moved = "stop_left";
 			player.left = false;
 
 		}
@@ -232,8 +233,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.up = false;
 
 		} */if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			System.out.println("Baixo Solto");
-			player.dodge = false;
+
 			Player.moved = "stop";
 
 		}

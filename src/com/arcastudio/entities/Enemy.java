@@ -124,6 +124,11 @@ public class Enemy extends Entity{
 				frames = 0;
 				index++;
 				if(index == rightAtackSlime.length) {
+					if(Player.dodge == false) {
+						Player.life = Player.life - 30;
+					}else {
+						System.out.println("desviou");
+					}
 					index = 0;
 					moved = "right";
 				}
@@ -135,6 +140,11 @@ public class Enemy extends Entity{
 				frames = 0;
 				index++;
 				if(index == leftAtackSlime.length) {
+					if(Player.dodge == false) {
+						Player.life = Player.life - 30;
+					}else {
+						System.out.println("desviou");
+					}		
 					index = 0;
 					moved = "left";
 				}
@@ -190,12 +200,6 @@ public class Enemy extends Entity{
 						moved = "rightAtack";
 					}if(moved == "left") {
 						moved = "leftAtack";
-					}
-					if(player.dodge == false) {
-						Player.life = Player.life - 30;
-					}
-					else {
-						System.out.println("desviou");
 					}
 					timeing = 0;
 					}

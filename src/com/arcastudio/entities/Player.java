@@ -29,6 +29,8 @@ public class Player extends Entity {
 	
 	private BufferedImage frontPlayer;
 	
+	public static int timeing = 0;
+	
 	
 	public static BufferedImage player_front;
 	public static BufferedImage player_stop_left;
@@ -77,7 +79,13 @@ public class Player extends Entity {
 		}
 		
 		if(dodge) {
+			timeing++;
 			moved = "dodge";
+			if(timeing == 30) {
+				timeing = 0;
+				moved = "stop";
+				dodge = false;}
+			
 		}
 		
 		if(World.isFree((int)x, (int)(y+1)) && isJumping == false) {
@@ -142,29 +150,24 @@ public class Player extends Entity {
 				}
 			}
 		}
-		
-		checkCollisionLifePack();
-		
+		checkColisionLifepack();	
 		//Config Camera
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
 	}
 	
-	public void checkCollisionLifePack() {
-		for(int i = 0; i < Game.entities.size(); i++) {
-			Entity e = Game.entities.get(i);
-			if(e instanceof Lifepack) {
-				if(Entity.isCollidding(this, e)) {
-					life+=8;
-					if(life >= 100) {
-						life = 100;
-					}
-					Game.entities.remove(i);
-					return;
+	public void checkColisionLifepack() {
+		for(int i = 0; i <	Game.entities.size(); i++) {
+			Entity atual = Game.entities.get(i);
+			if(atual instanceof Lifepack) {
+				if(Entity.isCollidding(this, atual)) {
+					System.out.println("oi");
+					life+=10;
 				}
 			}
 		}
 	}
+
 	
 	public void render(Graphics g) {
 		//Ativar o player no JFrame, flip

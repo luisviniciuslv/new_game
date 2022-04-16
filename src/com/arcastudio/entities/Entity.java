@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import com.arcastudio.main.Game;
 import com.arcastudio.world.Camera;
+import com.arcastudio.world.World;
+import com.arcastudio.entities.Lifepack;
 
 public class Entity {
 	
@@ -70,7 +72,7 @@ public class Entity {
 	
 	
 	public void tick() {
-		
+
 	}
 	public static boolean isCollidding(Entity e1, Entity e2) {
 		Rectangle e1Mask = new Rectangle(e1.getX() + e1.maskx, e1.getY()+e1.masky, e1.mwidth, e1.mheight);
