@@ -11,6 +11,8 @@ public class World {
 	public static Tile[] tiles;
 	public static int WIDTH, HEIGHT;
 	public static final int TILE_SIZE = 16;
+	public static int xSpawn;
+	public static int ySpawn;
 	public World(String path) {
 		try {
 			BufferedImage map = ImageIO.read(getClass().getResource(path));
@@ -46,6 +48,8 @@ public class World {
 						// Player
 						Game.player.setX(xx * 16);
 						Game.player.setY(yy * 16);
+						xSpawn = xx*16;
+						ySpawn = yy*16;
 					}else if (pixelAtual == 0xFF000000) {
 						// BEDROCK
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_BEDROCK);

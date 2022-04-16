@@ -1,6 +1,5 @@
 package com.arcastudio.entities;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,9 +8,12 @@ import java.util.Random;
 import com.arcastudio.main.Game;
 import com.arcastudio.world.Camera;
 import com.arcastudio.world.World;
+import com.arcastudio.entities.Player;
 
 public class Enemy extends Entity{
 	
+	private static final boolean Player_dodge = false;
+
 	public int sec = 0;
 	
 	static Random random = new Random();
@@ -20,6 +22,8 @@ public class Enemy extends Entity{
 	public int jumpHeight = 20;
 	public int jumpFrames = 0;
 	public boolean isJumping = false;
+	
+	public static Player player;
 	
 	public int timeing = 0;
 	
@@ -187,9 +191,12 @@ public class Enemy extends Entity{
 					}if(moved == "left") {
 						moved = "leftAtack";
 					}
-					
-					Player.life = Player.life - 30;
-					System.out.println("life: " + Game.player.life);	
+					if(player.dodge == false) {
+						Player.life = Player.life - 30;
+					}
+					else {
+						System.out.println("desviou");
+					}
 					timeing = 0;
 					}
 				}

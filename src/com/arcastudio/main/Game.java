@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.arcastudio.entities.Enemy;
 //Importa��o dos Packages
+import com.arcastudio.entities.Enemy;
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
 import com.arcastudio.graficos.SpriteEnemy;
@@ -208,9 +208,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.jump = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			
-			//player.down = true;
-
+			player.dodge = true;
 		}
 
 	}
@@ -234,11 +232,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			player.up = false;
 
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+		} */if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			System.out.println("Baixo Solto");
-			player.down = false	;
+			player.dodge = false;
+			Player.moved = "stop";
 
-		}*/
+		}
 
 	}
 

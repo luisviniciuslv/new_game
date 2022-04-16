@@ -12,27 +12,30 @@ public class Player extends Entity {
 	public boolean right, left;
 	
 	public int dir = 1;
-	private double gravity = 1;
+	private double gravity = 4;
 	
-	public double speed = 2;
+	public double speed = 3;
 	public boolean jump = false;
 	public int jumpHeight = 32;
 	public int jumpFrames = 0;
 	public boolean isJumping = false;
+	public static boolean dodge = false;
 	
 	public boolean inFloor = false;
 	
 	private int frames = 0, maxFrames = 10, index =	0;
+	
 	public static String moved = "stop";
-
+	
 	private BufferedImage frontPlayer;
+	
 	
 	public static BufferedImage player_front;
 	public static BufferedImage player_stop_left;
 	public static BufferedImage player_stop_right;
 	public static BufferedImage[] player_right;
 	public static BufferedImage[] player_left;
-	
+	public static BufferedImage player_dodge ;
 	
 	public static double life = 100, maxlife = 100;
 	
@@ -62,10 +65,20 @@ public class Player extends Entity {
 		
 		player_stop_right = Game.spriteplayer.getSprite(2, 0, 11, 16);
 		player_stop_left = Game.spriteplayer.getSprite(3, 16, 11, 16);
+		player_dodge = Game.spriteplayer.getSprite(96, 0, 16, 16);
 	}
 
 	public void tick() {
-		moved = "stop";
+		
+		if(life <= 0) {
+			Game.player.setX(World.xSpawn);
+			Game.player.setY(World.ySpawn);
+			life = maxlife;
+		}
+		
+		if(dodge) {
+			moved = "dodge";
+		}
 		
 		if(World.isFree((int)x, (int)(y+1)) && isJumping == false) {
 			y+=gravity;
@@ -151,6 +164,9 @@ public class Player extends Entity {
 		}
 		else if(moved == "stop_left") {
 			g.drawImage(player_stop_left, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		else if(moved == "dodge") {
+			g.drawImage(player_dodge, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else {
 			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
