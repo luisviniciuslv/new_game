@@ -33,9 +33,8 @@ public class Enemy extends Entity{
 	
 	private BufferedImage[] leftSlime;
 	private BufferedImage[] rightSlime;
-	
-	private BufferedImage rightAtackSlime;
-	private BufferedImage leftAtackSlime;
+	private BufferedImage[] rightAtackSlime;
+	private BufferedImage[] leftAtackSlime;
 	
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, null);
@@ -45,16 +44,33 @@ public class Enemy extends Entity{
 		rightSlime[1]= Game.spriteEnemy.getSprite(96, 0, 16, 16);
 		rightSlime[2]= Game.spriteEnemy.getSprite(80, 0, 16, 16);
 		rightSlime[3]= Game.spriteEnemy.getSprite(64, 0, 16, 16);
-		
+									/*
+									  |
+									  | 	esse numero não pode ser ímpar
+									  |
+									  |
+									  |
+									  |
+									  V
+									 */
 		leftSlime = new BufferedImage[4];
 		leftSlime[0]= Game.spriteEnemy.getSprite(48, 0, 16, 16);
 		leftSlime[1]= Game.spriteEnemy.getSprite(32, 0, 16, 16);
 		leftSlime[2]= Game.spriteEnemy.getSprite(16, 0, 16, 16);
 		leftSlime[3]= Game.spriteEnemy.getSprite(0, 0, 16, 16);
 		
+		leftAtackSlime = new BufferedImage[4];
+		leftAtackSlime[0]= Game.spriteEnemy.getSprite(0, 16, 16, 16);
+		leftAtackSlime[1]= Game.spriteEnemy.getSprite(16, 16, 16, 16);
+		leftAtackSlime[2]= Game.spriteEnemy.getSprite(32, 16, 16, 16);
+		leftAtackSlime[3]= Game.spriteEnemy.getSprite(48, 0, 16, 16);
 
-		rightAtackSlime = Game.spriteEnemy.getSprite(96, 16, 16, 16);
-		leftAtackSlime = Game.spriteEnemy.getSprite(16, 16, 16, 16);
+		rightAtackSlime = new BufferedImage[4];
+		rightAtackSlime[0]= Game.spriteEnemy.getSprite(112, 16, 16, 16);
+		rightAtackSlime[1]= Game.spriteEnemy.getSprite(96, 16, 16, 16);
+		rightAtackSlime[2]= Game.spriteEnemy.getSprite(112, 16, 16, 16);
+		rightAtackSlime[3]= Game.spriteEnemy.getSprite(64, 0, 16, 16);
+		
 	}
 	public void tick() {
 		
@@ -95,6 +111,28 @@ public class Enemy extends Entity{
 				index++;
 				if(index == leftSlime.length) {
 					index = 0;
+				}
+			}
+		}
+		if(moved == "rightAtack") {
+			frames++;
+			if(frames == maxFrames) {
+				frames = 0;
+				index++;
+				if(index == rightAtackSlime.length) {
+					index = 0;
+					moved = "right";
+				}
+			}
+		}
+		if(moved == "leftAtack") {
+			frames++;
+			if(frames == maxFrames) {
+				frames = 0;
+				index++;
+				if(index == leftAtackSlime.length) {
+					index = 0;
+					moved = "left";
 				}
 			}
 		}
@@ -196,10 +234,10 @@ public class Enemy extends Entity{
 			g.drawImage(leftSlime[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "rightAtack") {
-			g.drawImage(rightAtackSlime, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(rightAtackSlime[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		else if(moved == "leftAtack") {
-			g.drawImage(leftAtackSlime, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(leftAtackSlime[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 
 	}
