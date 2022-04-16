@@ -34,24 +34,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Thread thread;
 	public static final int WIDTH = 240, HEIGHT = 160, SCALE = 3;
 	
-	//Imagens e Gr�ficos
+	// imagens e grafico
 	private BufferedImage image;
 	private Graphics g;
 	
-	//Entities
-	public static SpriteEnemy spriteEnemy;
-	public static SpritePlayer spriteplayer;
-	public static Spritesheet spritesheet;
-	
-	public static World world;
-	
+	//entities
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
 	
+	public static SpriteEnemy spriteEnemy;
+	public static SpritePlayer spriteplayer;
+	public static Spritesheet spritesheet;
+	public static World world;
 	public static Player player;
-	
 	public static Random rand;
-	
 	public UI ui;
 
 	// Construtor
@@ -111,6 +107,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void tick() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
+			if(e instanceof Player) {
+				//ticks player
+			}
 			e.tick();
 		}
 	}
@@ -135,7 +134,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		world.render(g);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-
+	
 			e.render(g);
 		}
 

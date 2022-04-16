@@ -62,15 +62,18 @@ public class World {
 						Enemy en = new Enemy(xx * 16, yy * 16, 16, 16, Entity.ENEMY_EN);
 						Game.entities.add(en);
 						Game.enemies.add(en);
+					} 
+					else if (pixelAtual == 0xFFFF7F7F) {
+						// Life Pack
+						Lifepack lifePack = new Lifepack(xx*16, yy*16, 16, 16, Entity.LIFEPACK_EN);
 						
-						
-					} else if (pixelAtual == 0xFFFF6A00) {
+						Game.entities.add(lifePack);
+						}
+ 
+					else if (pixelAtual == 0xFFFF6A00) {
 						// Weapon
 						Game.entities.add(new Weapon(xx * 16, yy * 16, 16, 16, Entity.WEAPON_EN));
-					} else if (pixelAtual == 0xFFFF7F7F) {
-						// Life Pack
-						//Game.entities.add(new Lifepack(xx * 16, yy * 16, 16, 16, Entity.LIFEPACK_EN));
-
+					
 					} else if (pixelAtual == 0xFFFFD800) {
 						// Bullet
 						//Game.entities.add(new Bullet(xx * 16, yy * 16, 16, 16, Entity.BULLET_EN));

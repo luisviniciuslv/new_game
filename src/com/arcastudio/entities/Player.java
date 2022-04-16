@@ -111,6 +111,7 @@ public class Player extends Entity {
 		}
 		
 		
+		
 		if(right && World.isFree((int)(x+speed), this.getY())) {
 			moved = "right";
 			x+=speed;
@@ -142,9 +143,27 @@ public class Player extends Entity {
 			}
 		}
 		
+		checkCollisionLifePack();
+		
 		//Config Camera
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
+	}
+	
+	public void checkCollisionLifePack() {
+		for(int i = 0; i < Game.entities.size(); i++) {
+			Entity e = Game.entities.get(i);
+			if(e instanceof Lifepack) {
+				if(Entity.isCollidding(this, e)) {
+					life+=8;
+					if(life >= 100) {
+						life = 100;
+					}
+					Game.entities.remove(i);
+					return;
+				}
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -172,5 +191,4 @@ public class Player extends Entity {
 			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
-
 }
