@@ -20,7 +20,7 @@ public class UI {
 		g.drawImage(Entity.LIFEPACK_EN, 0, 140, null);
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 8));
-		g.drawString("1", 15, 155);
+		g.drawString((int)(Player.LIFEPACKS) + "", 15, 155);
 		
 
 	}

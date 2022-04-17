@@ -16,6 +16,9 @@ public class Player extends Entity {
 	public int timing;
 	
 	
+	
+	
+	
 	public boolean jump = false;
 	public int jumpHeight = 32;
 	public int jumpFrames = 0;
@@ -31,7 +34,13 @@ public class Player extends Entity {
 	private BufferedImage[] leftPlayer;
 	
 	public static double life = 100, maxLife = 100;
-
+	
+	
+	
+	// ITENS
+	public static int LIFEPACKS = 0;
+	public boolean useLifePACKS = false;
+	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
@@ -61,7 +70,21 @@ public class Player extends Entity {
 
 	public void tick() {
 		moved = false;
-		
+		if(useLifePACKS) {
+			if(life < maxLife) {
+				if(LIFEPACKS > 0) {
+					LIFEPACKS--;	
+					if(LIFEPACKS < 0) {
+						LIFEPACKS = 0;
+					}
+					life +=10;
+					if(life > maxLife) {
+						life = maxLife;
+					}
+				}
+			}
+			useLifePACKS = false;
+		}
 		if(right && World.isFree((int)(x+speed), this.getY())) {
 			moved = true;
 			position = "right";
@@ -149,10 +172,7 @@ public class Player extends Entity {
 			Entity e = Game.entities.get(i);
 			if(e instanceof Lifepack) {
 				if(Entity.isCollidding(this, e)) {
-					life+=8;
-					if(life >= 100) {
-						life = 100;
-					}
+					LIFEPACKS+=1;
 					Game.entities.remove(i);
 					return;
 				}

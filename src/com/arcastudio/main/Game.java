@@ -206,6 +206,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			
 			player.down = true;
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
+			player.useLifePACKS = true;
+
+		}
 
 	}
 
