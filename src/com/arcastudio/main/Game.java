@@ -16,6 +16,7 @@ import java.util.Random;
 import com.arcastudio.entities.Enemy;
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
+import com.arcastudio.graficos.Spriteplayer;
 import com.arcastudio.graficos.Spritesheet;
 import com.arcastudio.graficos.UI;
 import com.arcastudio.world.World;
@@ -39,6 +40,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
 	public static Spritesheet spritesheet;
+	public static Spriteplayer spriteplayer;
 	public static World world;
 	public static Player player;
 	public static Random random;
@@ -60,6 +62,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
 		spritesheet = new Spritesheet("/spritesheet.png");
+		spriteplayer = new Spriteplayer("/spriteplayer.png");
 		
 		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
@@ -200,9 +203,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.jump = true;
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			System.out.println("Baixo");
+			
 			player.down = true;
-
 		}
 
 	}
@@ -227,8 +229,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			System.out.println("Baixo Solto");
-			player.down = false	;
 
 		}
 

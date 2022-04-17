@@ -13,6 +13,8 @@ public class Enemy extends Entity {
 
 	private int speed = 1;
 	
+	public int timing = 0;
+	
 	public boolean jump = false;
 	public int jumpHeight = 32;
 	public int jumpFrames = 0;
@@ -85,15 +87,12 @@ public class Enemy extends Entity {
 			}
 		} else {
 			//Estamos colidindo
-			if(Game.random.nextInt(100) < 10) {
-				Player.life-= Game.random.nextInt(3);
-				if(Player.life <= 0) {
-					//GameOver
-					System.exit(1);
-				}
-				System.out.println("Vida: " + Player.life);
+			
+			timing++;
+			if(timing == 30 && !Player.down) {
+				Player.life-=10;
+				timing = 0;
 			}
-		}
 		
 		//Animation
 		frames++;
@@ -105,7 +104,7 @@ public class Enemy extends Entity {
 			}
 		}
 
-	}}
+		}}}
 	
 	public boolean isColliddingWithPlayer() {
 		Rectangle enemyCurrent = new Rectangle(this.getX() + maskX, this.getY() + maskY, maskW, maskH);

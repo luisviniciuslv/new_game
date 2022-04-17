@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
 
 public class UI {
@@ -15,5 +16,12 @@ public class UI {
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 8));
 		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 16, 15);
+		
+		g.drawImage(Entity.LIFEPACK_EN, 0, 140, null);
+		g.setColor(Color.white);
+		g.setFont(new Font("arial", Font.BOLD, 8));
+		g.drawString("1", 15, 155);
+		
+
 	}
 }

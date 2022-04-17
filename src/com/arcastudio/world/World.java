@@ -36,7 +36,10 @@ public class World {
 						//Sky
 						tiles[xx+(yy * WIDTH)] = new NoCollision(xx*16, yy*16, Tile.TILE_SKY);
 						
-					} else if(pixelAtual == 0xFF4CFF00) {
+					}else if(pixelAtual == 0xFF000000) {
+						//GRAM
+						tiles[xx+(yy * WIDTH)] = new Collision(xx*16, yy*16, Tile.TILE_BEDROCK);}
+					else if(pixelAtual == 0xFF4CFF00) {
 						//GRAM
 						tiles[xx+(yy * WIDTH)] = new Collision(xx*16, yy*16, Tile.TILE_GRAM);
 						
