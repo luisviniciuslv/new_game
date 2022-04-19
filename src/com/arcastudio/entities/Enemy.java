@@ -14,7 +14,7 @@ public class Enemy extends Entity {
 	private int speed = 1;
 	
 	public int timing = 0;
-	
+	public static Player player;
 	public boolean jump = false;
 	public int jumpHeight = 32;
 	public int jumpFrames = 0;
@@ -35,6 +35,14 @@ public class Enemy extends Entity {
 	}
 
 	public void tick() {
+		frames++;
+		if (frames == maxFrames) {
+			frames = 0;
+			index++;
+			if (index > maxIndex) {
+				index = 0;
+			}
+		}
 		if(x - Game.player.getX()  < 100) {
 			
 			if(World.isFree(this.getX(),(int)(y+1))) {
@@ -69,7 +77,7 @@ public class Enemy extends Entity {
 				
 			}
 		if (this.isColliddingWithPlayer() == false) {
-
+			Player.canAtack = false;
 			if (x < Game.player.getX() && World.isFree(x + speed, this.getY())
 					&& !isCollidding(x + speed, this.getY())) {
 				x += speed;
@@ -87,24 +95,21 @@ public class Enemy extends Entity {
 			}
 		} else {
 			//Estamos colidindo
-			
+			Player.canAtack = true;
 			timing++;
-			if(timing == 30 && !Player.down) {
+			if(timing == 10) {
+				if(Player.dodge) {
+					timing = 0;
+					return;
+				}
 				Player.life-=10;
 				timing = 0;
-			}
+			}}}}
 		
-		//Animation
-		frames++;
-		if (frames == maxFrames) {
-			frames = 0;
-			index++;
-			if (index > maxIndex) {
-				index = 0;
-			}
-		}
+			
 
-		}}}
+		//Animation
+
 	
 	public boolean isColliddingWithPlayer() {
 		Rectangle enemyCurrent = new Rectangle(this.getX() + maskX, this.getY() + maskY, maskW, maskH);

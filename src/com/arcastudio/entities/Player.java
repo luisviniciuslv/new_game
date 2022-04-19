@@ -9,14 +9,16 @@ import com.arcastudio.world.World;
 
 public class Player extends Entity {
 	
+	public int curAnimation = 0;
+	public int curFrames = 0, targetFrames = 15;
+	
 	public boolean right, up, left;
-	public static boolean down;
+	public static boolean dodge;
+	public static boolean atack;
+	public static boolean canAtack;
 	public String position = "stop";
-	public int speed = 2;
+	public int speed = 1;
 	public int timing;
-	
-	
-	
 	
 	
 	public boolean jump = false;
@@ -24,14 +26,19 @@ public class Player extends Entity {
 	public int jumpFrames = 0;
 	public boolean isJumping = false;
 	
-	private int frames = 0, maxFrames = 20, index =	0, maxIndex = 3;
+	private int frames = 0, maxFrames = 15, index =	0, maxIndex = 3;
 	private boolean moved = false;
 	
 	private BufferedImage frontPlayer;
 	private BufferedImage downRightPlayer;
 	private BufferedImage downLeftPlayer;
+	private BufferedImage jumpRightPlayer;
+	private BufferedImage jumpLeftPlayer;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
+	private BufferedImage[] rightPlayerAtack;
+	private BufferedImage[] leftPlayerAtack;
+	
 	
 	public static double life = 100, maxLife = 100;
 	
@@ -48,6 +55,8 @@ public class Player extends Entity {
 		frontPlayer = Game.spriteplayer.getSprite(0,0,16,16);
 		downRightPlayer = Game.spriteplayer.getSprite(112,0,16,16);
 		downLeftPlayer = Game.spriteplayer.getSprite(112,16,16,16);
+		jumpRightPlayer = Game.spriteplayer.getSprite(16,32,16,16);
+		jumpLeftPlayer = Game.spriteplayer.getSprite(0,32,16,16);
 		
 		rightPlayer = new BufferedImage[6];	
 		rightPlayer[0] = Game.spriteplayer.getSprite(16,0,16,16);
@@ -65,7 +74,16 @@ public class Player extends Entity {
 		leftPlayer[4] = Game.spriteplayer.getSprite(32, 16, 16, 16);
 		leftPlayer[5] = Game.spriteplayer.getSprite(16, 16, 16, 16);
 
+		rightPlayerAtack = new BufferedImage[3];
+		rightPlayerAtack[0] = Game.spriteplayer.getSprite(0, 64, 16, 16);
+		rightPlayerAtack[1] = Game.spriteplayer.getSprite(16, 64, 22, 16);
+		rightPlayerAtack[2] = Game.spriteplayer.getSprite(0, 64, 16, 16);
 		
+		leftPlayerAtack = new BufferedImage[3];
+		leftPlayerAtack[0] = Game.spriteplayer.getSprite(80, 64, 16, 16);
+		leftPlayerAtack[1] = Game.spriteplayer.getSprite(58, 64, 22, 16);
+		leftPlayerAtack[2] = Game.spriteplayer.getSprite(80, 64, 16, 16);
+
 	}
 
 	public void tick() {
@@ -95,37 +113,43 @@ public class Player extends Entity {
 			position = "left";
 			x-=speed;
 		}
-		else if(down) {
+		if(dodge) {
+			timing++;
 			if(position == "left") {
 				position = "downleft";
 			}
-			if(position == "right") {
+			else if(position == "right") {
 				position = "downright";
 			}
-			timing++;
+		}
 			if(timing == 30) {
 				timing = 0;
-				down = false;
-				if(position == "downleft")
+				dodge = false;
+				if(position == "downleft") {
 					position = "left";
-				else {
+				}
+				else if(position == "downright") {
 					position = "right";
 				}
-			}
 		}
-		
-		
 		
 		if(jump) { 
 			if(!World.isFree(this.getX(),this.getY()+1)){
 				isJumping = true;
 		}
 			else {
-			jump = false;}
+			jump = false;
+			}
 		}
 		
 		if(isJumping) {
 			if(World.isFree(this.getX(), this.getY()-1)) {
+				if(position == "left") {
+					position = "jumpLeft";
+				}
+				if(position == "right") {
+					position = "jumpRight";
+				}
 				y-=2;	 
 				jumpFrames+=2;
 				if(jumpFrames == jumpHeight) {
@@ -142,11 +166,18 @@ public class Player extends Entity {
 		}
 	
 		
-		
 		else if(World.isFree(this.getX(), (int)(y+1))) {
 			moved = true;
-			y+=speed;
+			y+=2;
+		}else {
+			if(position == "jumpLeft") {
+				position = "left";
+			}
+			else if(position == "jumpRight"){
+				position = "right";
+			}
 		}
+		
 		
 		if(moved) {
 			frames++;
@@ -182,6 +213,18 @@ public class Player extends Entity {
 	
 	public void render(Graphics g) {
 		//Ativar o player no JFrame, flip
+		if(position == "rightAtack") {
+			g.drawImage(rightPlayerAtack[curAnimation], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		if(position == "leftAtack") {
+			g.drawImage(leftPlayerAtack[curAnimation], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		if(position == "jumpRight") {
+			g.drawImage(jumpRightPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		if(position == "jumpLeft") {
+			g.drawImage(jumpLeftPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
 		if(position == "downright") {
 			g.drawImage(downRightPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
@@ -191,11 +234,11 @@ public class Player extends Entity {
 		if(position == "stop") {
 			g.drawImage(frontPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		else if(position == "right") {
+		if(position == "right") {
 			g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		
-		else if(position == "left") {
+		if(position == "left") {
 			g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		

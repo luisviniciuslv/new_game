@@ -6,11 +6,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.JFrame;
 
 //Importa��o dos Packages
 import com.arcastudio.entities.Enemy;
@@ -21,9 +25,7 @@ import com.arcastudio.graficos.Spritesheet;
 import com.arcastudio.graficos.UI;
 import com.arcastudio.world.World;
 
-import javax.swing.JFrame;
-
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	// Variables
@@ -53,7 +55,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		// Para que os eventos de teclado funcionem
 		addKeyListener(this);
-
+		addMouseListener(this);
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
 		// Inicializando Objetos
@@ -182,36 +184,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// Esquerda e Direita
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-
-			System.out.println("Direita");
 			player.right = true;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 
-			System.out.println("Esquerda");
 			player.left = true;
-
 		}
-
-		// Cima e Baixo
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			player.jump = true;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			
-			player.down = true;
+			Player.dodge = true;
 		}
-		
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			player.useLifePACKS = true;
-
 		}
-
 	}
 
 	@Override
@@ -234,9 +223,38 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			//player.dodge = false;
+		} 
 
-		}
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		Player.atack = true;
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		Player.atack = false;
+		 
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
