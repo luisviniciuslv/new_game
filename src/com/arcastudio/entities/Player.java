@@ -14,9 +14,14 @@ public class Player extends Entity {
 	
 	public boolean right, up, left;
 	public static boolean dodge;
+	
+	
 	public static boolean atack;
+	public static boolean PlayercanAtack;
+	
+	
 	public static boolean canAtack;
-	public String position = "stop";
+	public static String position = "stop";
 	public int speed = 1;
 	public int timing;
 	
@@ -87,7 +92,33 @@ public class Player extends Entity {
 	}
 
 	public void tick() {
-		moved = false;
+		moved = false;		
+		if(atack && position == "left" || position == "leftAtack") {
+			curFrames++;
+			position = "leftAtack";
+			if(curFrames == 10) {
+				curFrames = 0;
+				curAnimation++;
+				if(curAnimation == leftPlayerAtack.length) {
+					curAnimation = 0;
+					position = "left";
+					atack = false;
+				}
+			}}
+		if(atack && position == "right" || position == "rightAtack") {
+			curFrames++;
+			position = "rightAtack";
+			if(curFrames == 10) {
+				curFrames = 0;
+				curAnimation++;
+				if(curAnimation == leftPlayerAtack.length) {
+					curAnimation = 0;
+					position = "right";
+					atack = false;
+				}
+			}}
+	
+
 		if(useLifePACKS) {
 			if(life < maxLife) {
 				if(LIFEPACKS > 0) {
@@ -165,7 +196,6 @@ public class Player extends Entity {
 			}
 		}
 	
-		
 		else if(World.isFree(this.getX(), (int)(y+1))) {
 			moved = true;
 			y+=2;
@@ -177,7 +207,6 @@ public class Player extends Entity {
 				position = "right";
 			}
 		}
-		
 		
 		if(moved) {
 			frames++;
@@ -237,11 +266,9 @@ public class Player extends Entity {
 		if(position == "right") {
 			g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		
 		if(position == "left") {
 			g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
-		
 	}
 
 }

@@ -17,7 +17,6 @@ public class UI {
 		g.setFont(new Font("arial", Font.BOLD, 8));
 		g.drawString((int)Player.life+"/"+(int)Player.maxLife, 16, 15);
 		
-		
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 8));
 		g.drawString("Q", 5, 143);
@@ -28,7 +27,6 @@ public class UI {
 		g.drawString((int)(Player.LIFEPACKS) + "", 15, 155);
 		
 	
-		
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 8));
 		g.drawString("E", 36, 143);

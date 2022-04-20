@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import com.arcastudio.entities.Enemy;
 import com.arcastudio.entities.Entity;
 import com.arcastudio.entities.Player;
+import com.arcastudio.graficos.SpriteEnemySlime;
 import com.arcastudio.graficos.Spriteplayer;
 import com.arcastudio.graficos.Spritesheet;
 import com.arcastudio.graficos.UI;
@@ -43,6 +44,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static List<Enemy> enemies;
 	public static Spritesheet spritesheet;
 	public static Spriteplayer spriteplayer;
+	public static Spriteplayer spriteslime;
 	public static World world;
 	public static Player player;
 	public static Random random;
@@ -65,7 +67,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		enemies = new ArrayList<Enemy>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		spriteplayer = new Spriteplayer("/spriteplayer.png");
-		
+		spriteslime = new Spriteplayer("/spriteenemies.png");
 		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
 		world = new World("/level2.png");
@@ -237,11 +239,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Player.atack = true;
+	
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		Player.atack = false;
+	
 		 
 	}
 
